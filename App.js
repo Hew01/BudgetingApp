@@ -30,17 +30,7 @@ export default function App(){
   };
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen 
-          name="Introduction" 
-          component={Introduction}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+      <Introduction />
   );
 };
 

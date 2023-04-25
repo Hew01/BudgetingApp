@@ -7,19 +7,17 @@ const LoadFonts = async () => {
   }
 
 const styles = StyleSheet.create({
-    container: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-      width: 360,
-      height: 800,
-      paddingLeft: 10,
-      paddingRight: 13,
-      paddingTop: 13,
-      paddingBottom: 88,
-      boxSizing: "border-box",
-    },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: 800,
+    paddingTop: 15,
+    paddingBottom: 88,
+    boxSizing: "border-box",
+  },
 
     background1: {
       backgroundColor: colors.background_white,
@@ -60,8 +58,9 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       justifyContent: "center",
       color: colors.black,
-      fontSize: 22,
+      fontSize: 27,
       lineHeight: 22,
+      paddingTop: 15,
       fontFamily: 'Inter-Medium',
       textAlign: "center",
     },
