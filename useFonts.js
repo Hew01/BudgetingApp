@@ -11,5 +11,7 @@ export default useFonts = async () => {
         'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
         'inter-semibold': require('./assets/fonts/Inter-SemiBold.ttf'),
         'inter-thin.': require('./assets/fonts/Inter-Thin.ttf'),
+        'Inter-Medium': require('./assets/fonts/Inter-Medium.ttf'),
+        'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
     });
 };

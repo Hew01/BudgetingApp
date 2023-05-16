@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import styles from '../styles';
+import styles from '../../styles';
 
 export default function Introduction() {
 
@@ -19,11 +19,11 @@ export default function Introduction() {
       <View style={styles.introductionContainerTop}>
         <Image
           style={styles.companyName}
-          source={require('../assets/images/CompanyName.png')}
+          source={require('../../assets/images/CompanyName.png')}
            // picture moneymate
         />
          <Image
-            source={require('../assets/images/vector1.png')}
+            source={require('../../assets/images/vector1.png')}
                // picture vector1
           />
           <Text style={styles.heading2}>
