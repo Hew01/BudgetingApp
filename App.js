@@ -6,12 +6,14 @@ import { Ionicons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import useFonts from './useFonts';
 import colors from './assets/colors/colors';
-import Introduction from './src/screens/Introduction';
-
+import Navigation from './navigation/RootNavigator';
+import { NativeBaseProvider, Box, StatusBar } from 'native-base';
+import theme from './configs/theme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(true);
 
   useEffect(() => {
     async function loadFontsAndAssets() {
@@ -31,8 +33,15 @@ export default function App() {
   if (!fontsLoaded) {
     return null; 
     // Return null until the custom fonts and assets are loaded
-  }x``
-  return <Introduction />;
+  }
+  return (
+  <SafeAreaProvider>
+    <NativeBaseProvider theme={theme}>
+        <Navigation />
+        <StatusBar translucent />
+    </NativeBaseProvider>
+  </SafeAreaProvider>
+  );
 };
 
 const styles = StyleSheet.create({

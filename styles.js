@@ -6,7 +6,7 @@ const LoadFonts = async () => {
     await useFonts();
   }
 
-const styles = StyleSheet.create({
+export  const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
