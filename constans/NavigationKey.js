@@ -1,5 +1,6 @@
 const NAVIGATION_KEY = {
     Home: 'Home',
+    Introduction: 'Introduction',
     Login: 'Login',
     About: 'About',
     Auth: 'Auth',

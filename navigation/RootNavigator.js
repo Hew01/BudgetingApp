@@ -9,7 +9,7 @@ import SamplePopupScreen from '../src/screens/SamplePopupScreen';
 import AppTabsNavigator from './AppTabsNavigator';
 import LoginScreen from '../src/screens/LoginScreen';
 import SignupScreen from '../src/screens/SignupScreen/Signup';
-
+import IntroductionScreen from '../src/screens/Introduction/Introduction';
 export default function Navigation() {
     // hooks
     // action
@@ -31,9 +31,7 @@ export default function Navigation() {
         </NavigationContainer>
     );
 }
-
 const Stack = createNativeStackNavigator();
-
 function RootNavigator() {
     // const isAppReady = useAppSelector((state) => state.application.isAppReady);
     // const { isLogin } = useAppSelector((state) => state.auth);
@@ -63,6 +61,14 @@ function RootNavigator() {
                 />
             </Stack.Group>
 
+            <Stack.Screen
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                }}
+                name="introduction"
+                component={IntroductionScreen}
+            />
             <Stack.Screen
                 options={{
                     headerShown: false,
