@@ -3,6 +3,11 @@ import { Text, View, Image, TextInput, StyleSheet } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { Button } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import colors from '../../../assets/colors/colors';
+
+
 export default function IntroductionScreen({ navigation }) {
   const [show, setShow] = useState(false);
   const showClick = () => setShow(!show);
@@ -18,14 +23,16 @@ export default function IntroductionScreen({ navigation }) {
           style={styles.backgroundImage}
         />
         <Text style={styles.title}>Đơn giản hóa chi tiêu của bạn</Text>
-        <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText} onPress={() => navigation.navigate('signup')}>Đăng kí miễn phí</Text>
+        <TouchableOpacity
+          style={[styles.buttonContainer, styles.buttonReg]} 
+          onPress={() => navigation.navigate('signup')}>
+            <Text style={styles.regText}>ĐĂNG KÍ MIỄN PHÍ</Text>
+        </TouchableOpacity>
+        <View style={[styles.buttonContainer, styles.buttonLog]}>
+          <Text style={styles.loginText}>
+            ĐĂNG NHẬP
+          </Text>
         </View>
-        <Text   
-          style={styles.registerText}
-        >
-          Đăng nhập
-        </Text>
       </View>
     </View>
   );
@@ -58,22 +65,26 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 23,
     textAlign: 'center',
+    marginBottom: 30,
   },
   buttonContainer: {
+    marginTop: 10,
     alignItems: 'center',
-    marginTop: 100,
-  },
-  buttonText: {
-    color: 'white',
-    backgroundColor: '#1FA97C',
-    paddingHorizontal: 50,
-    paddingVertical: 10,
     borderRadius: 23,
-    marginBottom: 0,
+    width: 300,
+    height: 40, 
+    justifyContent: 'center',
   },
-  registerText: {
-    alignSelf: 'center',
-    color: '#1FA97C',
-    paddingVertical: 10,
+  buttonReg: {
+    backgroundColor: colors.primary,
+  },
+  buttonLog: {
+    backgroundColor: colors.light_grey,
+  },
+  regText: {
+    color: colors.background_white
+  },
+  loginText: {
+    color: colors.primary,
   },
 });
