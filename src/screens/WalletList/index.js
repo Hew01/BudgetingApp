@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
-import colors from '../../../assets/colors/colors'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import colors from '../../../assets/colors/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function WalletList({ navigation }) {
     return (
-        <View> styles={styles.container}
+        <View style={styles.container}>
             <View style={styles.content}>
                 <View style={styles.totalMoneyContainer}>
                     <Text style={styles.totalMoneyText}>3,000,000 đ</Text>
@@ -47,7 +47,7 @@ export default function WalletList({ navigation }) {
                 </View>
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
     },
     totalMoneyText: {
         fontSize: 30,
-        fontWeight: 500,
+        fontWeight: '500',
         paddingTop: 20,
         paddingHorizontal: 17,
         paddingBottom: 5,
     },
     subHeading: {
         fontSize: 16,
-        fontWeight: 500,
+        fontWeight: '500',
         paddingTop: 5,
         paddingHorizontal: 17,
         paddingBottom: 20,
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
     },
     wlHeaders: {
         alignItems: 'flex-start',
-        fontWeight: 600,
+        fontWeight: '600',
         fontSize: 14,
         color: colors.dark_grey,
     },
     wlSubHeaders: {
         alignItems: 'flex-end',
         color: colors.primary,
-        fontWeight: 600,
+        fontWeight: '600',
         fontSize: 13,
     },
     wlContainer: {
@@ -108,12 +108,15 @@ const styles = StyleSheet.create({
     },
     wlText: {
         fontSize: 13,
-        fontWeight: 400,
+        fontWeight: '400',
     },
     sideL: {
         alignItems: 'flex-start',
     },
     sideR: {
         alignItems: 'flex-end',
-    }
-})
+    },
+    wlIonicons: {
+        marginRight: 5,
+    },
+});
