@@ -5,6 +5,7 @@ import Navigation from './navigation/RootNavigator';
 import { NativeBaseProvider,  StatusBar } from 'native-base';
 import theme from './configs/theme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import WalletList from './src/screens/WalletList';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(true);
@@ -21,12 +22,7 @@ export default function App() {
     return null; 
   }
   return (
-  <SafeAreaProvider>
-    <NativeBaseProvider theme={theme}>
-        <Navigation />
-        <StatusBar translucent />
-    </NativeBaseProvider>
-  </SafeAreaProvider>
-  );
+    <WalletList />
+);
 };
 

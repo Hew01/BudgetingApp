@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../../../assets/colors/colors'
-import { TouchableOpacity } from 'react-native-web'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function WalletList({ navigation }) {
     return (
@@ -13,28 +13,35 @@ export default function WalletList({ navigation }) {
                 </View>
                 <View style={styles.wlContent}>
                     <Text style={styles.wlHeaders}>Danh sách ví</Text>
-                    <Text style={[styles.wlHeaders, styles.wlSubHeaders]}>Chỉnh sửa</Text>
+                    <Text style={styles.wlSubHeaders}>Chỉnh sửa</Text>
                     <View style={styles.wlContainer}>
                         <TouchableOpacity style={styles.wlSelector}>
-                            <Text style={wlText}>
-                                <Icon style={wlIcon}></Icon>
+                            <Text style={[styles.wlText, styles.sideL]}>
+                                <Ionicons name="md-checkmark-circle" style={styles.wlIonicons}></Ionicons>
                                 Tiền mặt
                             </Text>
-                            <Text style={wlText}>3,000,000 đ</Text>
+                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.wlSelector}>
-                            <Text style={wlText}>
-                                <Icon style={wlIcon}></Icon>
+                            <Text style={[styles.wlText, styles.sideL]}>
+                                <Ionicons name="md-checkmark-circle" style={styles.wlIonicons}></Ionicons>
                                 Tiền mặt
                             </Text>
-                            <Text style={wlText}>3,000,000 đ</Text>
+                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.wlSelector}>
-                            <Text style={wlText}>
-                                <Icon style={wlIcon}></Icon>
+                            <Text style={[styles.wlText, styles.sideL]}>
+                                <Ionicons name="md-checkmark-circle" style={styles.wlIonicons}></Ionicons>
                                 Tiền mặt
                             </Text>
-                            <Text style={wlText}>3,000,000 đ</Text>
+                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.wlSelector}>
+                            <Text style={[styles.wlText, styles.sideL]}>
+                                <Ionicons name="md-checkmark-circle" style={styles.wlIonicons}></Ionicons>
+                                Tiền mặt
+                            </Text>
+                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -49,13 +56,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background_grey,
     },
     content: {
-        flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         padding: 55,
     },
     totalMoneyContainer: {
-        flex: 1,
         backgroundColor: colors.background_white,
         borderRadius: 10,
         justifyContent: 'center',
@@ -75,6 +80,40 @@ const styles = StyleSheet.create({
         paddingHorizontal: 17,
         paddingBottom: 20,
         color: colors.dark_grey,
+    },
+    wlContent: {
+        height: 500,
+        flex: 1,
+    },
+    wlHeaders: {
+        alignItems: 'flex-start',
+        fontWeight: 600,
+        fontSize: 14,
+        color: colors.dark_grey,
+    },
+    wlSubHeaders: {
+        alignItems: 'flex-end',
+        color: colors.primary,
+        fontWeight: 600,
+        fontSize: 13,
+    },
+    wlContainer: {
+        marginTop: 30,
+        borderRadius: 10,
+        backgroundColor: colors.background_white,
+    },
+    wlSelector: {
+        paddingVertical: 15,
+        paddingHorizontal: 40,
+    },
+    wlText: {
+        fontSize: 13,
+        fontWeight: 400,
+    },
+    sideL: {
+        alignItems: 'flex-start',
+    },
+    sideR: {
+        alignItems: 'flex-end',
     }
-
 })
