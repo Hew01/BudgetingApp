@@ -2,10 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NAVIGATION_KEY from '../constans/NavigationKey';
 import HomeScreen from '../src/screens/HomeScreen';
-import User from '../src/screens/User';
 import { MyTabBar } from './MyTabBar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'native-base';
+import TransactionScreen from '../src/screens/Transaction/transaction';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -18,6 +18,7 @@ export default function AppTabsNavigator() {
             screenOptions={{
                 headerShadowVisible: false,
             }}
+            
         >
             <BottomTab.Screen
                 name={NAVIGATION_KEY.Home}
@@ -28,10 +29,10 @@ export default function AppTabsNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen1"
-                component={HomeScreen}
+                name="transaction"
+                component={TransactionScreen}
                 options={{
-                    title: 'Test Screen 1',
+                    title: 'Giao dịch',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />
@@ -44,10 +45,10 @@ export default function AppTabsNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="User"
-                component={User}
+                name="TestScreen3"
+                component={HomeScreen}
                 options={{
-                    title: 'Người dùng',
+                    title: 'Test Screen 3',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />

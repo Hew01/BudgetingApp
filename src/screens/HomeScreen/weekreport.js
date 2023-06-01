@@ -1,6 +1,6 @@
 import { Center, Text, Input, Button, View, Image } from "native-base";
 import { BarChart } from "react-native-chart-kit";
-import { MaterialIcons ,MaterialCommunityIcons} from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 const data = {
   labels: ["Mon", " Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
   datasets: [
@@ -47,7 +47,7 @@ export default function WeekReportScreen() {
           }}
         />
       </View>
-      <View  >
+      <View>
         <Text mt={2} fontWeight={"medium"} fontSize={20}>
           Chi tiêu nhiều nhất
         </Text>
@@ -58,7 +58,7 @@ export default function WeekReportScreen() {
             justifyContent={"space-between"}
           >
             <View mt={1} alignItems={"center"} flexDirection={"row"}>
-            <MaterialCommunityIcons name="fuel" size={24} color="#767676" />
+              <MaterialCommunityIcons name="fuel" size={24} color="#767676" />
               <Text ml={4}>Xăng</Text>
             </View>
             <Text>400.000 đ</Text>
@@ -69,8 +69,8 @@ export default function WeekReportScreen() {
             justifyContent={"space-between"}
           >
             <View mt={1} alignItems={"center"} flexDirection={"row"}>
-            <MaterialIcons name="power" size={24} color="#767676" />              
-            <Text ml={4}>Điện</Text>
+              <MaterialIcons name="power" size={24} color="#767676" />
+              <Text ml={4}>Điện</Text>
             </View>
             <Text>300.000 đ</Text>
           </View>
