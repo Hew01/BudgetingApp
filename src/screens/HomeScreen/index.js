@@ -1,5 +1,5 @@
 import { Button, Center, Text, View } from "native-base";
-import { Ionicons, FontAwesome,Fontisto,MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome,Fontisto,MaterialCommunityIcons,index } from "@expo/vector-icons";
 import { ScrollView } from "native-base";
 import { useState } from "react";
 import { BarChart } from "react-native-chart-kit";

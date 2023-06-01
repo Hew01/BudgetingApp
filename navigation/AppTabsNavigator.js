@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NAVIGATION_KEY from '../constans/NavigationKey';
 import HomeScreen from '../src/screens/HomeScreen';
+import User from '../src/screens/User';
 import { MyTabBar } from './MyTabBar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'native-base';
@@ -43,10 +44,10 @@ export default function AppTabsNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen3"
-                component={HomeScreen}
+                name="User"
+                component={User}
                 options={{
-                    title: 'Test Screen 3',
+                    title: 'Người dùng',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />
