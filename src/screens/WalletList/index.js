@@ -3,6 +3,9 @@ import React from 'react';
 import colors from '../../../assets/colors/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
+import { useState } from 'react';
+import { NativeIconAPI } from '@expo/vector-icons/build/vendor/react-native-vector-icons/lib/create-icon-set';
+
 
 export default function WalletList({ navigation }) {
     const [fontsLoaded] = useFonts({
@@ -16,7 +19,9 @@ export default function WalletList({ navigation }) {
         'Inter-SemiBold': require('../../../assets/fonts/Inter-SemiBold.ttf'),
         'Inter-Thin': require('../../../assets/fonts/Inter-Thin.ttf'),
     });
-    
+
+    const [textChanged, setTextChanged] = useState(false);
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -27,44 +32,66 @@ export default function WalletList({ navigation }) {
                 <View style={styles.wlContent}>
                     <View style={styles.wlHeaders}>
                         <Text style={styles.wlHeaderText}>Danh sách ví</Text>
-                        <Text style={styles.wlSubHeaderText}>Chỉnh sửa</Text>
+                        <Text
+                            style={styles.wlSubHeaderText}
+                            onPress={() => {
+                                if (textChanged === false) {
+                                    setTextChanged(true)
+                                } else {
+                                    setTextChanged(false)
+                                }
+                            }}>
+                                {textChanged ? "Xong" : "Chỉnh sửa"}
+                        </Text>
                     </View>
                     <View style={styles.wlContainer}>
                         <TouchableOpacity style={styles.wlSelector}>
                             <View style={styles.wlMoneh}>
-                                <Ionicons name="md-cash" size={20} style={styles.wlIonicons}></Ionicons>
+                                <Ionicons name="md-cash" size={20} style={[styles.wlIonicons, styles.pd_10]}></Ionicons>
                                 <Text style={[styles.wlText, styles.sideL]}>
                                     Tiền mặt
                                 </Text>
                             </View>
-                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
+                            { textChanged ? 
+                                <Ionicons name="md-ellipsis-vertical" size={20} style={styles.wlIonicons}></Ionicons> :
+                                <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>  
+                            }
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.wlSelector}>
                             <View style={styles.wlMoneh}>
-                                <Ionicons name="md-cash" size={20} style={styles.wlIonicons}></Ionicons>
+                                <Ionicons name="md-cash" size={20} style={[styles.wlIonicons, styles.pd_10]}></Ionicons>
                                 <Text style={[styles.wlText, styles.sideL]}>
                                     Tiền mặt
                                 </Text>
                             </View>
-                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
+                            { textChanged ? 
+                                <Ionicons name="md-ellipsis-vertical" size={20} style={styles.wlIonicons}></Ionicons> :
+                                <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>  
+                            }
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.wlSelector}>
                             <View style={styles.wlMoneh}>
-                                <Ionicons name="md-cash" size={20} style={styles.wlIonicons}></Ionicons>
+                                <Ionicons name="md-cash" size={20} style={[styles.wlIonicons, styles.pd_10]}></Ionicons>
                                 <Text style={[styles.wlText, styles.sideL]}>
                                     Tiền mặt
                                 </Text>
                             </View>
-                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
+                            { textChanged ? 
+                                <Ionicons name="md-ellipsis-vertical" size={20} style={styles.wlIonicons}></Ionicons> :
+                                <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>  
+                            }
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.wlSelector}>
                             <View style={styles.wlMoneh}>
-                                <Ionicons name="md-cash" size={20} style={styles.wlIonicons}></Ionicons>
+                                <Ionicons name="md-cash" size={20} style={[styles.wlIonicons, styles.pd_10]}></Ionicons>
                                 <Text style={[styles.wlText, styles.sideL]}>
                                     Tiền mặt
                                 </Text>
                             </View>
-                            <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>
+                            { textChanged ? 
+                                <Ionicons name="md-ellipsis-vertical" size={20} style={styles.wlIonicons}></Ionicons> :
+                                <Text style={[styles.wlText, styles.sideR]}>3,000,000 đ</Text>  
+                            }
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -115,14 +142,14 @@ const styles = StyleSheet.create({
     },
     wlHeaderText: {
         alignItems: 'flex-start',
-        fontFamily: 'Inter-SemiBold',
+        fontFamily: 'Inter-Bold',
         fontSize: 19,
         color: colors.dark_grey,
     },
     wlSubHeaderText: {
         alignItems: 'flex-end',
         color: colors.primary,
-        fontFamily: 'Inter-SemiBold',
+        fontFamily: 'Inter-Bold',
         fontSize: 16,
     },
     wlContainer: {
@@ -154,7 +181,9 @@ const styles = StyleSheet.create({
     },
     wlIonicons: {
         flexDirection: 'row',
-        paddingRight: 10,
         marginTop: 3,
+    },
+    pd_10: {
+        paddingRight: 10,
     },
 });
