@@ -3,13 +3,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 import NAVIGATION_KEY from '../constans/NavigationKey';
-
 import AuthNavigator from './AuthNavigator';
 import SamplePopupScreen from '../src/screens/SamplePopupScreen';
 import AppTabsNavigator from './AppTabsNavigator';
 import LoginScreen from '../src/screens/LoginScreen';
 import SignupScreen from '../src/screens/SignupScreen/Signup';
 import IntroductionScreen from '../src/screens/Introduction/Introduction';
+import TransactionDetailsScreen from '../src/screens/Transaction/transactionDetails';
+import thisMonth from '../src/screens/Transaction/thismonth';
+import { Button } from 'native-base';
 export default function Navigation() {
     // hooks
     // action
@@ -85,6 +87,19 @@ function RootNavigator() {
                 name="signup"
                 component={SignupScreen}
             />
+            <Stack.Screen
+                
+                options={{
+                    headerTitle: 'Chi tiết giao dịch',
+                    headerBackTitle:'Trở về',
+                    headerBackTitleVisible:true,
+                    
+                  }}
+                name="transactiondetails"
+                component={TransactionDetailsScreen}
+                
+            />
+            
         </Stack.Navigator>
     );
 }
