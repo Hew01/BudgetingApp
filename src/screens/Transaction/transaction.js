@@ -18,13 +18,7 @@ import { Dimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useState } from "react";
 import thisMonth from "./thismonth";
-
-const lastMonth = () => (
-  <View pt={4} pl={4} pr={4} flex={1}>
-    <View background={"white"} height={"72"}></View>
-  </View>
-);
-
+import lastMonth from "./lastmonth";
 
 
 const renderScene = SceneMap({
