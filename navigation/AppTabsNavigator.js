@@ -3,13 +3,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NAVIGATION_KEY from '../constans/NavigationKey';
 import HomeScreen from '../src/screens/HomeScreen';
 import { MyTabBar } from './MyTabBar';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from 'native-base';
+import { Ionicons,FontAwesome } from '@expo/vector-icons';
+import { useTheme,Button } from 'native-base';
 import TransactionScreen from '../src/screens/Transaction/transaction';
+import SamplePopupScreen from '../src/screens/SamplePopupScreen';
+import AddTranSactionScreen from '../src/screens/AddTransaction/addtransaction';
 
 const BottomTab = createBottomTabNavigator();
 
-export default function AppTabsNavigator() {
+export default function AppTabsNavigator({navigation}) {
     const { colors } = useTheme();
     return (
         <BottomTab.Navigator
@@ -17,6 +19,7 @@ export default function AppTabsNavigator() {
             tabBar={(props) => <MyTabBar {...props} />}
             screenOptions={{
                 headerShadowVisible: false,
+                
             }}
             
         >
@@ -26,20 +29,54 @@ export default function AppTabsNavigator() {
                 options={{
                     title: 'Trang chủ',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    
                 }}
             />
             <BottomTab.Screen
                 name="transaction"
                 component={TransactionScreen}
+                
                 options={{
+                    
                     title: 'Giao dịch',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />
             <BottomTab.Screen
+                name="addTransaction"
+                component={AddTranSactionScreen}
+                
+                options={{
+                    title: "Thêm giao dich",
+                    tabBarLabel:null,
+                    tabBarIcon:  () => (
+                        <Button
+                        justifyContent={'center'}
+                        
+                          borderRadius={200}
+                          bottom="30%"
+                          h={16}
+                          w={16}
+                          style={{shadowColor: '#000000',
+                          shadowOffset: {
+                            width: 0,
+                            height: 2
+                          },
+                          shadowRadius: 5,
+                          shadowOpacity: 0.7}}
+                          onPress={() => navigation.navigate('addtransaction')}
+                        >
+                        <FontAwesome  name="plus" size={28} color="white" />                        
+                        </Button>
+                      ),
+                }}
+            />
+            <BottomTab.Screen
                 name="TestScreen2"
                 component={HomeScreen}
+            
                 options={{
+                    
                     title: 'Test Screen 2',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
@@ -47,7 +84,9 @@ export default function AppTabsNavigator() {
             <BottomTab.Screen
                 name="TestScreen3"
                 component={HomeScreen}
+                
                 options={{
+                    
                     title: 'Test Screen 3',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
