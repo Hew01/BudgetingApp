@@ -8,6 +8,7 @@ import { useTheme,Button } from 'native-base';
 import TransactionScreen from '../src/screens/Transaction/transaction';
 import SamplePopupScreen from '../src/screens/SamplePopupScreen';
 import AddTranSactionScreen from '../src/screens/AddTransaction/addtransaction';
+import UserScreen from '../src/screens/User';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -82,12 +83,12 @@ export default function AppTabsNavigator({navigation}) {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen3"
-                component={HomeScreen}
+                name="user"
+                component={UserScreen}
                 
                 options={{
                     
-                    title: 'Test Screen 3',
+                    title: 'Người dùng',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />
