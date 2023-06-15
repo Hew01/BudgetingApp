@@ -3,12 +3,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NAVIGATION_KEY from '../constans/NavigationKey';
 import HomeScreen from '../src/screens/HomeScreen';
 import { MyTabBar } from './MyTabBar';
-import { Ionicons,FontAwesome } from '@expo/vector-icons';
+import { Ionicons,FontAwesome,AntDesign,FontAwesome5 } from '@expo/vector-icons';
 import { useTheme,Button } from 'native-base';
 import TransactionScreen from '../src/screens/Transaction/transaction';
 import SamplePopupScreen from '../src/screens/SamplePopupScreen';
 import AddTranSactionScreen from '../src/screens/AddTransaction/addtransaction';
 import UserScreen from '../src/screens/User';
+import ReportScreen from '../src/screens/SamplePopupScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -40,7 +41,7 @@ export default function AppTabsNavigator({navigation}) {
                 options={{
                     
                     title: 'Giao dịch',
-                    tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    tabBarIcon: () => <AntDesign name="calendar" size={24} color={colors.primary[500]} />,
                 }}
             />
             <BottomTab.Screen
@@ -73,13 +74,13 @@ export default function AppTabsNavigator({navigation}) {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen2"
-                component={HomeScreen}
+                name="report"
+                component={ReportScreen}
             
                 options={{
                     
-                    title: 'Test Screen 2',
-                    tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    title: 'Báo cáo',
+                    tabBarIcon: () => <FontAwesome5 name="chart-bar" size={24} color={colors.primary[500]} />,
                 }}
             />
             <BottomTab.Screen
@@ -89,7 +90,7 @@ export default function AppTabsNavigator({navigation}) {
                 options={{
                     
                     title: 'Người dùng',
-                    tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    tabBarIcon: () => <FontAwesome name="user-o" size={24} color={colors.primary[500]} />,
                 }}
             />
         </BottomTab.Navigator>

@@ -1,16 +1,19 @@
-import { View, Text, Select, Input } from "native-base";
+import { View, Text, Select, Input, Button } from "native-base";
+import { ScrollView } from 'react-native-virtualized-view';
 import { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity} from "react-native";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-import DatePicker from "react-native-date-picker";
 function AddTranSactionScreen({ navigation }) {
   const [transaction, setTransaction] = useState("chitieu");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   return (
-    <View flex={1}>
+    <View  flex={1}>
+                
+
       <View
         pl={4}
         pr={4}
@@ -42,6 +45,7 @@ function AddTranSactionScreen({ navigation }) {
           Lưu
         </Text>
       </View>
+      <ScrollView automaticallyAdjustKeyboardInsets={true}>
       <View m={4} h={"120"} p={4} bg={"white"} borderRadius={10}>
         <View>
           <Select
@@ -71,6 +75,7 @@ function AddTranSactionScreen({ navigation }) {
           />
         </View>
       </View>
+
       <View
         flex={1}
         flexDirection={"column"}
@@ -113,6 +118,7 @@ function AddTranSactionScreen({ navigation }) {
             <Select.Item label="Đầu tư" value="dautu" />
           </Select>
         )}
+
         <Text
           mt={4}
           mb={2}
@@ -147,7 +153,7 @@ function AddTranSactionScreen({ navigation }) {
             <View flexDirection={"row"}>
               <FontAwesome5 name="calendar-alt" size={24} color="#767676" />
               <Text alignSelf={"flex-end"} fontWeight={"medium"} ml={4}>
-                Thời gian
+              {date.toLocaleDateString('vi',options)}
               </Text>
             </View>
             <AntDesign name="right" size={24} color="#767676" />
@@ -162,9 +168,15 @@ function AddTranSactionScreen({ navigation }) {
         >
           Ghi chú
         </Text>
-        <Input multiline={true} fontSize={18} fontWeight={'medium'} variant="outline" />
+        <Input numberOfLines={3} minHeight={60} maxHeight={60} multiline={true}   fontSize={18} fontWeight={'medium'} variant="outline" />
+         <Button  mt={4} mb={2} borderRadius={50} alignSelf={"center"} width={200 } h={46}>
+          {transaction=='chitieu' ? ('Nhập khoản chi') : ('Nhập khoản thu')}
+          </Button> 
+
 
       </View>
+      </ScrollView>
+
     </View>
   );
 }

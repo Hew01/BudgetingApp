@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 
 export const MyTabBar = ({ state, descriptors, navigation }) => {
     return (
-        <HStack style={{ height: 60 }} shadow={9} bg="white">
+        <HStack pl={2} pr={2} style={{ height: 60 }} shadow={9} bg="white">
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =
