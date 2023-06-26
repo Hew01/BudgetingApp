@@ -1,10 +1,27 @@
-import { Center, Text, Input, Button, View, Image } from 'native-base';
-import { useState } from 'react';
+import { Center, Text, Input, Button, View } from 'native-base';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { login } from '../../../firebase';
+import NAVIGATION_KEY from '../../../constans/NavigationKey';
 export default function LoginScreen({ navigation }) {
   const [show, setShow] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const showClick = () => setShow(!show);
-  const forgetPassword = () => {};
+
+  const handleLogin = async () => {
+    try {
+      await login(email, password);
+      alert('Đăng nhập thành công');
+      //navigation.navigate({ name: NAVIGATION_KEY.AppTabs, params: { screen: NAVIGATION_KEY.Home } });
+      // Navigate to the AppTabs screen within the AuthTabs navigator
+      // Thực hiện hành động sau khi đăng nhập thành công
+    } catch (error) {
+      console.log('Error logging in:', error);
+    }
+  };
+
   return (
     <Center flex={1}>
       <Text fontSize={22} marginBottom={10} fontWeight="medium">
@@ -17,12 +34,7 @@ export default function LoginScreen({ navigation }) {
         fontSize={16}
         variant="underlined"
         placeholder="Email"
-        _light={{
-          placeholderTextColor: 'blueGray.400',
-        }}
-        _dark={{
-          placeholderTextColor: 'blueGray.50',
-        }}
+        onChangeText={setEmail}
       />
       <Input
         width={300}
@@ -30,15 +42,17 @@ export default function LoginScreen({ navigation }) {
         fontSize={16}
         variant="underlined"
         placeholder="Mật khẩu"
-        _light={{
-          placeholderTextColor: 'blueGray.400',
-        }}
-        _dark={{
-          placeholderTextColor: 'blueGray.50',
-        }}
         type={show ? 'text' : 'password'}
         InputRightElement={
-          <Button pb={0} backgroundColor="transparent" justifyContent="center" ml={1} roundedLeft={0} roundedRight="md" onPress={showClick}>
+          <Button
+            pb={0}
+            backgroundColor="transparent"
+            justifyContent="center"
+            ml={1}
+            roundedLeft={0}
+            roundedRight="md"
+            onPress={showClick}
+          >
             {show ? (
               <Ionicons name="eye-outline" size={24} color="black" />
             ) : (
@@ -46,17 +60,15 @@ export default function LoginScreen({ navigation }) {
             )}
           </Button>
         }
+        onChangeText={setPassword}
       />
-      <Text onPress={forgetPassword} fontSize={12} marginTop={2} fontStyle="italic" alignSelf="flex-end" marginRight={10} fontWeight="light">
-        Quên mật khẩu?
-      </Text>
-      <Button fontSize={16} margin={10} borderRadius={30} width={300}>
+      <Button fontSize={16} margin={10} borderRadius={30} width={300} onPress={handleLogin}>
         ĐĂNG NHẬP
       </Button>
       <View marginBottom={10} flexDirection="row">
         <Text>Chưa có tài khoản? </Text>
         <Text color="darkBlue.500" onPress={() => navigation.navigate('signup')}>
-          Đăng kí ngay
+          Đăng ký
         </Text>
       </View>
     </Center>

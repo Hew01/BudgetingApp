@@ -22,7 +22,7 @@ export default function IntroductionScreen({ navigation }) {
           <Text style={styles.buttonText} onPress={() => navigation.navigate('signup')}>Đăng kí miễn phí</Text>
         </View>
         <Text   
-          style={styles.registerText}
+          style={styles.registerText} onPress={() => navigation.navigate('login')}
         >
           Đăng nhập
         </Text>

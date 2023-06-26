@@ -13,6 +13,8 @@ import { Button, Text } from "native-base";
 import AddTranSactionScreen from "../src/screens/AddTransaction/addtransaction";
 export default function Navigation() {
   // hooks
+  //const [isAppReady, setAppReady] = useState(false);
+  //const isLogin = useSelector((state) => state.auth.isLogin); 
   // action
   const prepare = async () => {
     // await waitAsyncAction(2000);
@@ -33,7 +35,7 @@ export default function Navigation() {
   );
 }
 const Stack = createNativeStackNavigator();
-function RootNavigator({navigation}) {
+function RootNavigator({navigation, setIsLogin}) {
   // const isAppReady = useAppSelector((state) => state.application.isAppReady);
   // const { isLogin } = useAppSelector((state) => state.auth);
   const isLogin = true;
@@ -43,11 +45,12 @@ function RootNavigator({navigation}) {
   // }
   return (
     <Stack.Navigator>
-      {!isLogin ? (
+      {isLogin ? (
         <Stack.Screen
           name={NAVIGATION_KEY.Auth}
           component={AuthNavigator}
           options={{ headerShown: false }}
+          setIsLogin={setIsLogin}
         />
       ) : (
         <>
