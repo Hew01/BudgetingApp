@@ -35,7 +35,7 @@ export default function Navigation() {
   );
 }
 const Stack = createNativeStackNavigator();
-function RootNavigator({navigation, setIsLogin}) {
+function RootNavigator({navigation}) {
   // const isAppReady = useAppSelector((state) => state.application.isAppReady);
   // const { isLogin } = useAppSelector((state) => state.auth);
   const isLogin = true;
@@ -45,12 +45,11 @@ function RootNavigator({navigation, setIsLogin}) {
   // }
   return (
     <Stack.Navigator>
-      {isLogin ? (
+      {!isLogin ? (
         <Stack.Screen
           name={NAVIGATION_KEY.Auth}
           component={AuthNavigator}
           options={{ headerShown: false }}
-          setIsLogin={setIsLogin}
         />
       ) : (
         <>
