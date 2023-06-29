@@ -9,7 +9,7 @@ import TransactionScreen from '../src/screens/Transaction/transaction';
 import SamplePopupScreen from '../src/screens/SamplePopupScreen';
 import AddTranSactionScreen from '../src/screens/AddTransaction/addtransaction';
 import UserScreen from '../src/screens/User';
-import ReportScreen from '../src/screens/SamplePopupScreen';
+import ReportScreen from '../src/screens/Report/report';
 
 const BottomTab = createBottomTabNavigator();
 
