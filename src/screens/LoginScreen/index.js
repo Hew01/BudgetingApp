@@ -1,13 +1,14 @@
 import { Center, Text, Input, Button, View } from 'native-base';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { login } from '../../../firebase';
 import NAVIGATION_KEY from '../../../constans/NavigationKey';
+import AuthContext from '../../../navigation/AuthContext';
 export default function LoginScreen({ navigation }) {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const {login} = useContext(AuthContext);
   const showClick = () => setShow(!show);
 
   const handleLogin = async () => {
@@ -17,6 +18,7 @@ export default function LoginScreen({ navigation }) {
       //navigation.navigate({ name: NAVIGATION_KEY.AppTabs, params: { screen: NAVIGATION_KEY.Home } });
       // Navigate to the AppTabs screen within the AuthTabs navigator
       // Thực hiện hành động sau khi đăng nhập thành công
+      navigation.navigate(NAVIGATION_KEY.AppTabs);
     } catch (error) {
       console.log('Error logging in:', error);
     }

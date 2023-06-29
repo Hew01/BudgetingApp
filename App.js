@@ -5,7 +5,7 @@ import Navigation from './navigation/RootNavigator';
 import { NativeBaseProvider,  StatusBar } from 'native-base';
 import theme from './configs/theme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import { AuthProvider } from './navigation/AuthContext';
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(true);
   useEffect(() => {
@@ -21,10 +21,12 @@ export default function App() {
     return null; 
   }
   return (
-  <SafeAreaProvider>
+    <SafeAreaProvider>
     <NativeBaseProvider theme={theme}>
+      <AuthProvider>
         <Navigation />
         <StatusBar translucent />
+      </AuthProvider>
     </NativeBaseProvider>
   </SafeAreaProvider>
   );
