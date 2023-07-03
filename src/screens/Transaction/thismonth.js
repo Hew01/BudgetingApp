@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
-export default function thisMonth() {
+export default function lastMonth() {
     const navigation=useNavigation();
   return (
     <View pt={2} pl={4} pr={4} flex={1}>
@@ -58,7 +58,7 @@ export default function thisMonth() {
             Danh sách giao dịch
           </Text>
           <Text mr={2} color={"gray.600"} fontWeight={"medium"} fontSize={12}>
-            Xem tất cả
+            Tìm kiếm
           </Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('transactiondetails')}>

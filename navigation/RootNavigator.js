@@ -13,6 +13,7 @@ import { Button, Text } from "native-base";
 import AddTranSactionScreen from "../src/screens/AddTransaction/addtransaction";
 import AuthContext from "./AuthContext";
 import { useContext } from 'react';
+import ChangeAccountScreen from "../src/screens/User/changepassword";
 export default function Navigation() {
   // hooks
   //const [isAppReady, setAppReady] = useState(false);
@@ -117,6 +118,15 @@ function RootNavigator({navigation}) {
         }}
         name="transactiondetails"
         component={TransactionDetailsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: "Đổi mật khẩu",
+          headerBackTitle: "Trở về",
+          headerBackTitleVisible: true,
+        }}
+        name="changepassword"
+        component={ChangeAccountScreen}
       />
     </Stack.Navigator>
   );

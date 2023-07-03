@@ -1,6 +1,6 @@
 // firebase.js
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile,signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlbdlxp30lzlLaldIq62HRpJhHqlTMDL4",
@@ -20,6 +20,9 @@ const createAccount = async (email, password, fullName) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     // Tài khoản người dùng được tạo thành công
     const user = userCredential.user;
+    await updateProfile(auth.currentUser, {
+      displayName: fullName
+    });
     console.log('User account created:', user);
   } catch (error) {
     console.log('Error creating user account:', error);
@@ -33,10 +36,19 @@ const login = async (email, password) => {
     // Người dùng đăng nhập thành công
     const user = userCredential.user;
     console.log('User logged in:', user);
+    return user;
   } catch (error) {
     console.log('Error logging in:', error);
     throw error;
   }
 };
 
-export { auth, createAccount, login };
+export const logout = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.log('Error logging out:', error);
+  }
+};
+
+export { auth, createAccount, login,updateProfile, signOut };
