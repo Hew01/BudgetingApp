@@ -1,6 +1,6 @@
-// firebase.js
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile,signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
+import { getFirestore, collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlbdlxp30lzlLaldIq62HRpJhHqlTMDL4",
@@ -14,15 +14,24 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const createAccount = async (email, password, fullName) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // Tài khoản người dùng được tạo thành công
     const user = userCredential.user;
+
     await updateProfile(auth.currentUser, {
       displayName: fullName
     });
+
+    // Create a user document in Firestore
+    const userDocRef = doc(db, 'users', user.uid);
+    await setDoc(userDocRef, {
+      email: user.email,
+      fullName: fullName
+    });
+
     console.log('User account created:', user);
   } catch (error) {
     console.log('Error creating user account:', error);
@@ -33,7 +42,6 @@ const createAccount = async (email, password, fullName) => {
 const login = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    // Người dùng đăng nhập thành công
     const user = userCredential.user;
     console.log('User logged in:', user);
     return user;
@@ -51,4 +59,17 @@ export const logout = async () => {
   }
 };
 
-export { auth, createAccount, login,updateProfile, signOut };
+const updatePassword = async (currentPassword, newPassword) => {
+  try {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+    await reauthenticateWithCredential(user, credential);
+    await updatePassword(user, newPassword);
+    console.log('Password updated successfully');
+  } catch (error) {
+    console.log('Error updating password:', error);
+    throw error;
+  }
+};
+
+export { auth, createAccount, login, updateProfile, signOut };
