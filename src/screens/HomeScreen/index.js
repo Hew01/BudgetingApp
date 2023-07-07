@@ -1,24 +1,96 @@
 import { Button, Center, Text, View } from "native-base";
 import { Ionicons, FontAwesome,Fontisto,MaterialCommunityIcons,index } from "@expo/vector-icons";
 import { ScrollView } from "native-base";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { BarChart } from "react-native-chart-kit";
 import WeekReportScreen from "./weekreport";
 import MonthReportScreen from "./monthreport";
-
+import { getTienMat, getUserInfo } from "../../../firebase";
+import { getWalletInfo } from "../../../firebase";
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 export default function HomeScreen({ navigation }) {
   const [index, setindex] = useState(0);
+  const [tienMat, setTienMat] = useState(null); // State variable để lưu trữ giá trị tienmat
+  const [transactions, setTransactions] = useState([]);
+  const [totalThuNhap, setTotalThuNhap] = useState(0);
+  const [totalChiTieu, setTotalChiTieu] = useState(0);
+  const [walletInfo, setWalletInfo] = useState(null);
+  const getCurrentUserId = () => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    return currentUser ? currentUser.uid : '';
+  };
+
+  useEffect(() => {
+    const fetchWalletInfo = async () => {
+      try {
+        const walletInfoData = await getUserInfo();
+        setTienMat(walletInfoData);
+      } catch (error) {
+        console.log('Lỗi khi lấy thông tin tiền mặt:', error);
+      }
+    };
+
+    const fetchUserInfo = async () => {
+      try {
+        const walletInfoData = await getWalletInfo();
+        setWalletInfo(walletInfoData);
+      } catch (error) {
+        console.log('Lỗi khi lấy thông tin wallet:', error);
+      }
+    };
+    const fetchTransactions = async () => {
+      try {
+        const db = getFirestore();
+        const transactionsRef = collection(db, 'transaction');
+
+        // Fetch transactions for the month of July 2023
+        const transactionsQuery = query(
+          transactionsRef,
+          where('userId', '==', getCurrentUserId()),
+          where('year', '==', 2023)
+        );
+        const transactionsQuerySnapshot = await getDocs(transactionsQuery);
+        const transactionsData = transactionsQuerySnapshot.docs.map((doc) => doc.data());
+        setTransactions(transactionsData);
+
+        // Calculate total Thu nhập and total Chi tiêu
+        let totalThuNhap = 0;
+        let totalChiTieu = 0;
+        transactionsData.forEach((transaction) => {
+          const amount = parseFloat(transaction.amount);
+          if (transaction.transactionType === 'thunhap') {
+            totalThuNhap += amount;
+          } else if (transaction.transactionType === 'chitieu') {
+            totalChiTieu += amount;
+          }
+        });
+        setTotalThuNhap(totalThuNhap);
+        setTotalChiTieu(totalChiTieu);
+      } catch (error) {
+        console.log('Error retrieving transactions:', error);
+      }
+    };
+
+    fetchTransactions();
+    fetchWalletInfo();
+    fetchUserInfo();
+  }, []);
+
+
+
   return (
     <View pl={4} pr={4} flex={1}>
       <ScrollView>
         <View flexDirection={"row"}>
-          <Text mr={2} fontWeight={"medium"} fontSize={22}>
+          <Text pt={3} mr={2} fontWeight={"medium"} fontSize={22}>
             3.000.000 đ
           </Text>
         </View>
         <View>
-          <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
+          <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
             Số dư hiện tại
           </Text>
           <View
@@ -36,7 +108,7 @@ export default function HomeScreen({ navigation }) {
                 Thu nhập
               </Text>
               <Text color={"green.700"} fontSize={18}>
-                +2.000.000 đ
+                +{totalThuNhap} đ
               </Text>
             </View>
             <View alignItems={"center"}>
@@ -44,7 +116,7 @@ export default function HomeScreen({ navigation }) {
                 Chi tiêu
               </Text>
               <Text color={"red.600"} fontSize={18}>
-                -2.000.000 đ
+                -{totalChiTieu} đ
               </Text>
             </View>
           </View>
@@ -57,11 +129,11 @@ export default function HomeScreen({ navigation }) {
             justifyContent={"space-between"}
             flexDirection={"row"}
           >
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
               {" "}
               Ví của tôi
             </Text>
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
               Xem tất cả
             </Text>
           </View>
@@ -85,8 +157,7 @@ export default function HomeScreen({ navigation }) {
               <Fontisto name="wallet" size={24} color="#767676" />
               <Text ml={4}>Tiền mặt</Text>
               </View>
-
-              <Text>3.000.000 đ</Text>
+              {tienMat && <Text>{tienMat.tienmat}  đ</Text>}
             </View>
             <View
               flex={"1"}
@@ -96,10 +167,10 @@ export default function HomeScreen({ navigation }) {
             >
               <View alignItems={"center"} flexDirection={"row"}>
                 <FontAwesome name="credit-card-alt" size={16} color="#767676" />
-                <Text ml={4}>Vietcombank</Text>
+                {walletInfo && <Text>    {walletInfo.Ten}</Text>}
               </View>
 
-              <Text>3.000.000 đ</Text>
+              {walletInfo && <Text>{walletInfo.soien} đ</Text>}
             </View>
           </View>
         </View>
@@ -111,16 +182,16 @@ export default function HomeScreen({ navigation }) {
             justifyContent={"space-between"}
             flexDirection={"row"}
           >
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
               {" "}
               Báo cáo chi tiêu
             </Text>
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
               Xem báo cáo{" "}
             </Text>
           </View>
         </View>
-        <View padding={3} borderRadius={10} background={"white"} height={"400"}>
+        <View py={5} px={3} borderRadius={10} background={"white"} height={"420"}>
           <View
             borderRadius={8}
             background={"rgba(231, 231, 231, 1)"}
@@ -200,11 +271,11 @@ export default function HomeScreen({ navigation }) {
             justifyContent={"space-between"}
             flexDirection={"row"}
           >
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={14}>
               {" "}
               Giao dịch gần đây
             </Text>
-            <Text mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
+            <Text pb={3} mr={2} color={"gray.600"} fontWeight={"normal"} fontSize={12}>
               Xem tất cả
             </Text>
           </View>

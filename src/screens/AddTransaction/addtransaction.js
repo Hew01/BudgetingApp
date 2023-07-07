@@ -1,5 +1,5 @@
 // Import necessary modules
-import React, { useState, useRef , useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Select, Input, Button } from 'native-base';
 import { ScrollView } from 'react-native-virtualized-view';
 import { TouchableOpacity } from 'react-native';
@@ -7,30 +7,37 @@ import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { MaterialIcons } from '@expo/vector-icons';
+
 function AddTransactionScreen({ navigation }) {
   const [transaction, setTransaction] = useState('chitieu');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [amount, setAmount] = useState('');
-  const [userId, setUserId] = useState(''); // Store the user ID
-  const inputRef = useRef(null); // Add a useRef for the input reference
+  const [userId, setUserId] = useState('');
+  const [paymentWallet, setPaymentWallet] = useState('');
+  const [note, setNote] = useState('');
+  const [day, setDay] = useState('');
+const [month, setMonth] = useState('');
+const [year, setYear] = useState('');
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserId(user.uid); // Set the user ID when the user is authenticated
+        setUserId(user.uid);
       } else {
-        setUserId(''); // Clear the user ID when the user is not authenticated
+        setUserId('');
       }
     });
 
     return () => {
-      unsubscribe(); // Clean up the subscription on component unmount
+      unsubscribe();
     };
   }, []);
-
 
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -43,23 +50,31 @@ function AddTransactionScreen({ navigation }) {
   };
 
   const handleConfirmDate = (selectedDate) => {
+    const day = selectedDate.getDate();
+    const month = selectedDate.getMonth() + 1; // Adding 1 because months are zero-based
+    const year = selectedDate.getFullYear();
+
     setDate(selectedDate);
+    setDay(day); // Set the day value
+    setMonth(month); // Set the month value
+    setYear(year); // Set the year value
     hideDatePicker();
   };
 
-  
   const saveTransaction = async () => {
     try {
-      // Get the data to be saved
       const transactionData = {
         transactionType: transaction,
         category: category,
-        amount: amount, // Use the actual variable or state that holds the amount value
-        userId: userId, // Include the user ID in the transaction data
+        amount: amount,
+        userId: userId,
+        note: note,
+        day: day, // Include the day value
+        month: month, // Include the month value
+        year: year, // Include the year value
         // Add other necessary fields
       };
 
-      // Save the data to Firestore
       const db = getFirestore();
       const docRef = await addDoc(collection(db, 'transaction'), transactionData);
       console.log('Transaction saved with ID: ', docRef.id);
@@ -75,8 +90,7 @@ function AddTransactionScreen({ navigation }) {
   return (
     <View flex={1}>
       <View
-        pl={4}
-        pr={4}
+        py={4}
         pb={2}
         justifyContent={'space-between'}
         alignItems={'flex-end'}
@@ -86,8 +100,9 @@ function AddTransactionScreen({ navigation }) {
         shadow={2}
       >
         <Text
+          px={4}
           onPress={() => navigation.goBack()}
-          fontWeight={'semibold'}
+          fontWeight={'normal'}
           color={'red.500'}
           fontSize={18}
         >
@@ -97,8 +112,9 @@ function AddTransactionScreen({ navigation }) {
           Thêm giao dịch
         </Text>
         <Text
+          px={4}
           onPress={() => navigation.goBack()}
-          fontWeight={'semibold'}
+          fontWeight={'normal'}
           color={'red.500'}
           fontSize={20}
         >
@@ -106,12 +122,12 @@ function AddTransactionScreen({ navigation }) {
         </Text>
       </View>
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View m={4} h={'120'} p={4} bg={'white'} borderRadius={10}>
+        <View m={4} p={4} bg={'white'} borderRadius={10}>
           <View>
             <Select
               variant="unstyled"
               w={'50%'}
-              fontWeight={'extrabold'}
+              fontWeight={'semibold'}
               color={'#767676'}
               fontSize={20}
               selectedValue={transaction}
@@ -124,12 +140,11 @@ function AddTransactionScreen({ navigation }) {
               ref={inputRef}
               keyboardType="numeric"
               fontWeight={'medium'}
-              height={'12'}
               fontSize={24}
               variant="underlined"
               placeholder="Nhập số tiền"
-              value={amount} // Bind the amount value to the input
-              onChangeText={(value) => setAmount(value)} // Update the amount state when the input changes
+              value={amount}
+              onChangeText={(value) => setAmount(value)}
               InputRightElement={
                 <Text color={'#767676'} fontSize={20}>
                   VNĐ
@@ -143,7 +158,6 @@ function AddTransactionScreen({ navigation }) {
           flex={1}
           flexDirection={'column'}
           m={4}
-          height={400}
           p={4}
           bg={'white'}
           borderRadius={10}
@@ -152,7 +166,7 @@ function AddTransactionScreen({ navigation }) {
             <Select
               variant="rounded"
               placeholder="Chọn danh mục"
-              fontWeight={'extrabold'}
+              fontWeight={'normal'}
               color={'#767676'}
               fontSize={16}
               selectedValue={category}
@@ -169,7 +183,7 @@ function AddTransactionScreen({ navigation }) {
             <Select
               variant="rounded"
               placeholder="Chọn danh mục"
-              fontWeight={'extrabold'}
+              fontWeight={'normal'}
               color={'#767676'}
               fontSize={16}
               selectedValue={category}
@@ -185,17 +199,19 @@ function AddTransactionScreen({ navigation }) {
           <Text mt={4} mb={2} fontSize={16} color={'#767676'} fontWeight={'medium'}>
             Ví thanh toán
           </Text>
-          <TouchableOpacity>
-            <View flexDirection={'row'} justifyContent={'space-between'}>
-              <View flexDirection={'row'}>
-                <FontAwesome5 name="wallet" size={24} color="#767676" />
-                <Text alignSelf={'flex-end'} fontWeight={'medium'} ml={4}>
-                  Tiền mặt
-                </Text>
-              </View>
-              <AntDesign name="right" size={24} color="#767676" />
-            </View>
-          </TouchableOpacity>
+          <Select
+            variant="rounded"
+            placeholder="Chọn ví thanh toán"
+            fontWeight={'normal'}
+            color={'#767676'}
+            fontSize={16}
+            selectedValue={paymentWallet}
+            onValueChange={(itemValue) => setPaymentWallet(itemValue)}
+          >
+            <Select.Item label="Tiền mặt" value="tienmat" />
+            <Select.Item label="Sacombank" value="sacombank" />
+          </Select>
+
           <Text mt={4} mb={2} fontSize={16} color={'#767676'} fontWeight={'medium'}>
             Thời gian
           </Text>
@@ -221,6 +237,8 @@ function AddTransactionScreen({ navigation }) {
             fontSize={18}
             fontWeight={'medium'}
             variant="outline"
+            value={note}
+            onChangeText={(value) => setNote(value)}
           />
           <Button mt={4} mb={2} borderRadius={50} alignSelf={'center'} width={200} h={46} onPress={saveTransaction}>
             {transaction == 'chitieu' ? 'Nhập khoản chi' : 'Nhập khoản thu'}
