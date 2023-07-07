@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Input, Button } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { updatePassword } from '../../../firebase';
+import { updatePasswordFunction } from '../../../firebase';
 
 export default function ChangeAccountScreen() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -16,7 +16,7 @@ export default function ChangeAccountScreen() {
       setErrorMessage('Mật khẩu xác nhận không khớp');
     } else {
       try {
-        await updatePassword(currentPassword, newPassword);
+        await updatePasswordFunction(currentPassword, newPassword);
         alert('Mật khẩu đã được thay đổi thành công');
         setCurrentPassword('');
         setNewPassword('');

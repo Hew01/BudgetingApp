@@ -21,7 +21,7 @@ const UserScreen = ({navigation}) => {
     <View style={{ flex: 1 }}>
       <View  borderBottomLeftRadius={35} borderBottomRightRadius={30} style={{ paddingBottom:10,paddingTop: 10, alignItems: 'center' }}>
         <Image
-          source={require('../../../assets/images/CompanyName.png')}
+          source={require('../../../assets/images/123.png')}
           style={{ width: 100, height: 100, borderRadius: 50 }}
           accessibilityLabel="User Avatar"
         />
@@ -48,7 +48,7 @@ const UserScreen = ({navigation}) => {
      
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width:'100%' , justifyContent:'space-between', flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity  onPress={() => navigation.navigate('wallet')} style={{width:'100%' , justifyContent:'space-between', flexDirection: 'row', alignItems: 'center'}}>
           <View flexDirection={'row'}>
           <MaterialCommunityIcons name="wallet" size={24} color="#1FA97C" />
           <Text fontSize={15} style={{ marginLeft: 20 }}>Ví</Text>
@@ -56,10 +56,10 @@ const UserScreen = ({navigation}) => {
      
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width:'100%' , justifyContent:'space-between', flexDirection: 'row', alignItems: 'center'  }}>
+        <TouchableOpacity onPress={() => navigation.navigate('tienmat')} style={{width:'100%' , justifyContent:'space-between', flexDirection: 'row', alignItems: 'center'  }}>
         <View flexDirection={'row'}>
           <MaterialCommunityIcons name="cash" size={24} color="#1FA97C" />
-          <Text fontSize={15} style={{ marginLeft: 20 }}>Hạn mức chi tiêu</Text>
+          <Text fontSize={15} style={{ marginLeft: 20 }}>Tiền mặt</Text>
           </View>
      
         </TouchableOpacity>

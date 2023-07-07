@@ -1,42 +1,44 @@
-const MongoClient = require('mongodb').MongoClient;
+const admin = require('firebase-admin');
+const mongoose = require('mongoose');
 
-// Connection URL
-const url = 'mongodb://localhost:27017/';
+// Kết nối với Firebase
+const serviceAccount = require('./path/to/serviceAccountKey.json'); // Thay thế bằng đường dẫn đến tệp serviceAccountKey.json của bạn
 
-// Database name
-const dbName = 'budgeting'; // Name of your database
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-// Collection name
-const collectionName = 'budgetData'; // Name of your collection
+const firebaseDB = admin.firestore();
 
-// Create a new MongoClient
-const client = new MongoClient(url, { useUnifiedTopology: true });
+// Kết nối với MongoDB
+const mongoDBURL = 'mongodb://localhost:27017/budgeting'; // Thay thế URL kết nối của bạn tại đây
 
-// Connect to the MongoDB server
-client.connect(function(err) {
-  if (err) {
-    console.error('Failed to connect to the database:', err);
-    return;
-  }
+mongoose.connect(mongoDBURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Connected to MongoDB');
+  // Truy vấn dữ liệu từ Firebase
+  firebaseDB.collection('users').get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const userData = doc.data();
 
-  console.log('Connected successfully to the server');
+      // Chuyển đổi dữ liệu từ Firebase thành dữ liệu MongoDB
+      const user = new User({
+        userId: userData.userId,
+        // Các trường thông tin người dùng khác
+      });
 
-  // Get the database instance
-  const db = client.db(dbName);
-
-  // Create a new collection
-  db.createCollection(collectionName, function(err, result) {
-    if (err) {
-      console.error('Failed to create collection:', err);
-      return;
-    }
-
-    console.log(`Collection '${collectionName}' created successfully`);
-
-    // Perform collection operations
-    // ...
-
-    // Close the database connection
-    client.close();
+      // Lưu dữ liệu vào MongoDB
+      user.save().then(() => {
+        console.log('User saved to MongoDB:', user);
+      }).catch((error) => {
+        console.log('Error saving user to MongoDB:', error);
+      });
+    });
+  }).catch((error) => {
+    console.log('Error querying Firebase:', error);
   });
+}).catch((error) => {
+  console.log('Error connecting to MongoDB:', error);
 });

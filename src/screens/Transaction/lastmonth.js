@@ -83,7 +83,7 @@ export default function lastMonth() {
                       </Text>
                       <View alignSelf="flex-end">
                         <Text mb={-1} fontSize={12}>
-                          Tháng 6, 2023
+                          Tháng 6, 2013
                         </Text>
                       </View>
                     </View>
